@@ -9,6 +9,8 @@ namespace Booking.Controllers
 {
     public class ExampleController : Controller
     {
+
+        public ExampleRequest exampleOne;
         public ActionResult Index()
         {
             ExampleRequest model = new ExampleRequest();
@@ -20,5 +22,37 @@ namespace Booking.Controllers
             model.ReservationTime = DateTime.Now;
             return View(model);
         }
+
+        public ActionResult Establish() 
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Establish(ExampleRequest model) 
+        {
+            return RedirectToAction("Details");
+        }
+
+        public ActionResult Details(ExampleRequest model)
+        {
+            return View(this.exampleOne);
+        }
+
+
+        public ActionResult Upcoming()
+        {
+            var example = new ExampleRequest();
+            var reservations = example.GetCurrentReservations();
+            return View(reservations);
+        }
+
+        public ActionResult Edit(string name) 
+        {
+            ExampleRequest model = new ExampleRequest();
+            var found = model.GetCurrentReservations().Where(x => x.Name == name).FirstOrDefault();
+            return View(found);
+        }
+
     }
 }
